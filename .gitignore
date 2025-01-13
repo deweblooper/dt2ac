@@ -1,0 +1,10 @@
+# Directories
+data/
+dev/
+img/
+
+# Vendor things
+vendor/bootsrap*/
+vendor/composer/
+vendor/jquery/
+vendor/autoload.php
