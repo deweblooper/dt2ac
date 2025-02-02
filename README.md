@@ -55,3 +55,8 @@ V tabuľke v stĺpci `Výsledok` sa v prípade neúspešného exportovania riadk
 - Nie sú využívané žiadne databázové údaje ani programy.
 Okrem komunikácie s API ActiveCollab aplikácia neodosiela nikam nijaké dáta.
 - Neprebieha žiadna komunikácia s DeskTime, ani s akoukoľvek treťou, štvrtou, ani nadzemskou či vesmírnou stranou  :)
+
+### KNOWN ISSUES
+- môže ešte vykazovať chybovosť pri použití v rôznych podmienkach
+	* názvy projektov a taskov **neidentické v oboch prostrediach** (DeskTime vs. ActiveCollab) (BACHA: aj 2 medzery namiesto 1, alebo na konci)
+	* neštandardné názvy **iné než v tvare**: "#0000: - Názov tasku"
