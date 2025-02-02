@@ -92,6 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['uploaded_file'])) {
 		}
 		return $result;
 	}
+
+
 	$csv_data = array_map('parseCSVLine', $array_data);
 	
 	// napárovanie obsahu a ošetrených hlavičiek
@@ -236,8 +238,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['uploaded_file'])) {
 									<th class="info">date_last</th>
 									<th class="info">id_project</th>
 									<th class="info">id_task</th>
-									<th class="info">time&nbsp;<span class="label label-info" data-toggle="tooltip" title="Tento čas sa odosiela" style="cursor:pointer;">i</span></th>
-									<th class="info">time_q&nbsp;<span class="label label-info" data-toggle="tooltip" title="Čas zaokrúhľovaný na 15min nahor (môže sa odosielať miesto time)" style="cursor:pointer;">i</span></th>
+									<th class="info">time&nbsp;<span class="label label-info" data-toggle="tooltip" title="Čas zaokrúhľovaný na desatiny" style="cursor:pointer;">i</span></th>
+									<th class="info">time_q&nbsp;<span class="label label-info" data-toggle="tooltip" title="Čas zaokrúhľovaný na 15min nahor (tento sa odosiela)" style="cursor:pointer;">i</span></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -316,7 +318,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['uploaded_file'])) {
 					'item_data' => [
 						'id_project' => $item_data['id_project'],
 						'id_task' => $item_data['id_task'],
-						'value' => $item_data['time'],
+						'value' => $item_data['time_q'],
 						'user_id' => $_SESSION['userLogged']['id'],
 						'job_type_id' => $_SESSION['job_type_project'],
 						'record_date' => $item_data['date_last'],
@@ -327,7 +329,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['uploaded_file'])) {
 				try {
 					$time_add = $client->post('projects/'. $item_data['id_project'] .'/time-records', [
 						'task_id' => $item_data['id_task'],
-						'value' => $item_data['time'],
+						'value' => $item_data['time_q'],
 						'user_id' => $_SESSION['userLogged']['id'],
 						'job_type_id' => $_SESSION['job_type_project'],
 						'record_date' => $item_data['date_last'],
@@ -345,7 +347,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['uploaded_file'])) {
 					'export'=> "projektovy",
 					'item_data' => [
 						'id_project' => $item_data['id_project'],
-						'value' => $item_data['time'],
+						'value' => $item_data['time_q'],
 						'user_id' => $_SESSION['userLogged']['id'],
 						'job_type_id' => $_SESSION['job_type_project'],
 						'record_date' => $item_data['date_last'],
@@ -355,7 +357,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['uploaded_file'])) {
 
 				try {
 					$time_add = $client->post('projects/'. $item_data['id_project'] .'/time-records', [
-						'value' => $item_data['time'],
+						'value' => $item_data['time_q'],
 						'user_id' => $_SESSION['userLogged']['id'],
 						'job_type_id' => $_SESSION['job_type_project'],
 						'record_date' => $item_data['date_last'],
@@ -385,7 +387,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['uploaded_file'])) {
 				<td>'.$item_data['date_last'].'</td>
 				<td>'.$item_data['Project'].'</td>
 				<td>'.$item_data['Task'].'</td>
-				<td>'.$item_data['time'].'</td>
+				<td>'.$item_data['time_q'].'</td>
 				<td>'.$test_export[$ke]['result'].$error_msg.'</td>
 			</tr>';
 
@@ -580,7 +582,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['uploaded_file'])) {
 
 
 		
-// Generovanie HTML dev výpisov
+## Generovanie HTML dev výpisov
     $display_content = '
     
     <div class="col-xs-12"><h4>&nbsp;</h4></div>			
@@ -601,13 +603,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['uploaded_file'])) {
 (isset($login_failed)) ? ($display_content .= "\n" . "Login failed: " . "\n" . print_r($login_failed,1) . "\n<hr>\n") : null;
 (isset($selected_user)) ? ($display_content .= "\n" . "Selected user: " . "\n" . print_r($selected_user,1) . "\n<hr>\n") : null;
 //(isset($csv_data_parsed)) ? ($display_content .= "\n" . "CSV dáta: " . "\n" . print_r($csv_data_parsed,1) . "\n<hr>\n") : null;
-//(isset($user_projects_list)) ? ($display_content .= "\n" . "User projects: " . "\n" . print_r($user_projects_list,1) . "\n<hr>\n") : null;
-//(isset($ac_projects)) ? ($display_content .= "\n" . "AC Projekty základ: " . "\n" . print_r($ac_projects,1) . "\n<hr>\n") : null;
-//(isset($ac_tasks)) ? ($display_content .= "\n" . "AC Tasky základ: " . "\n" . print_r($ac_tasks,1) . "\n<hr>\n") : null;
 (isset($acdt_data)) ? ($display_content .= "\n" . "acdt_data: " . "\n" . print_r($acdt_data,1) . "\n<hr>\n") : null;
 (isset($af_data)) ? ($display_content .= "\n" . "AfterForm Data: " . "\n" . print_r($af_data,1) . "\n<hr>\n") : null;
 (isset($test_export)) ? ($display_content .= "\n" . "Test exportu: " . "\n" . print_r($test_export,1) . "\n<hr>\n") : null;
 (isset($project_job_types)) ? ($display_content .= "\n" . "Projec Job Types: " . "\n" . print_r($project_job_types,1) . "\n<hr>\n") : null;
+//(isset($user_projects_list)) ? ($display_content .= "\n" . "User projects: " . "\n" . print_r($user_projects_list,1) . "\n<hr>\n") : null;
+//(isset($ac_projects)) ? ($display_content .= "\n" . "AC Projekty základ: " . "\n" . print_r($ac_projects,1) . "\n<hr>\n") : null;
+//(isset($ac_tasks)) ? ($display_content .= "\n" . "AC Tasky základ: " . "\n" . print_r($ac_tasks,1) . "\n<hr>\n") : null;
 
 
 
@@ -624,7 +626,7 @@ if ($open_display == 1) {
 
 
 
-// koniec PHP
+## koniec PHP
 ?>
 <!doctype html>
 <html lang="en">

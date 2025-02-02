@@ -43,7 +43,7 @@ Väčšinou sa môže jednať o neidentické názvy taskov, alebo task už ukon�
 
 ### Export
 
-Ko kontrole údajov a prípadných korekciách dát v CSV, kliknutím na `Exportovať` sa odošlú údaje do API v inštancii ActiveCollab.
+Po kontrole údajov a prípadných korekciách dát v CSV, kliknutím na `Exportovať` sa odošlú údaje do API v inštancii ActiveCollab.
 
 ![alt text](docs/screen_06_export.png)
 
